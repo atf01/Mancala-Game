@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-start_board = [4] * 6 + [0] + [4] * 6 + [0]
+start_board = [4] * 6 + [0] + [4]*6 + [0]
 
 
 class Board():
@@ -55,19 +55,20 @@ class Board():
     def score(self, player):
         if all(ele == 0 for ele in self.Board[0:6]):
             self.Board[13] += self.Board[7] + self.Board[8] + self.Board[9] \
-                              + self.Board[10] + self.Board[11] + self.Board[12]
+                + self.Board[10] + self.Board[11] + self.Board[12]
             self.Board[7:13] = [0] * 6
         elif all(ele == 0 for ele in self.Board[7:13]):
             self.Board[6] += self.Board[0] + self.Board[1] + self.Board[2] \
-                             + self.Board[3] + self.Board[4] + self.Board[5]
+                + self.Board[3] + self.Board[4] + self.Board[5]
             self.Board[0:6] = [0] * 6
-        score = self.Board[6] - self.Board[13] if player == 0 else self.Board[13] - self.Board[6]
+        score = self.Board[6] - \
+            self.Board[13] if player == 0 else self.Board[13] - self.Board[6]
         return score
 
     def GameOver(self):
         if all(ele == 0 for ele in self.Board[0:6]):
             self.Board[13] += self.Board[7] + self.Board[8] + self.Board[9] + self.Board[10] + self.Board[11] + \
-                              self.Board[12]
+                self.Board[12]
             print(self)
             self.Board[7:13] = [0] * 6
             return True
