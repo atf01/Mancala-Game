@@ -17,10 +17,21 @@ class Game():
         2- Human Vs AI
         3- AI Vs Human
         4- AI VS AI
-        You chice ? :
+        You choice ? :
         '''))
-
-        self.player1, self.player2 = THE_players(Game_mode)
+        difficulty=''
+        if Game_mode>1:
+            difficulty=int(input('''
+            1- for easy AI
+            2- for moderate AI
+            3- for Hard AI
+            Your choice?
+            '''))
+        if Game_mode>1:
+            self.player1, self.player2 = THE_players(Game_mode,difficulty)
+        else:
+            self.player1, self.player2 = THE_players(Game_mode)
+            
         self.Curr_Player = self.player1
         print(self.player1.id, self.player2.id, self.Curr_Player.id)
 

@@ -1,4 +1,5 @@
-def AlphaBetaAlg(node, depth, alpha, beta, isMaximizing):
+import time
+def AlphaBetaAlg(node, depth, alpha, beta, isMaximizing,start_time,threshold):
     infinity = float('inf')
     if depth == 0 or node.isterminal():
         return node.value
@@ -9,6 +10,8 @@ def AlphaBetaAlg(node, depth, alpha, beta, isMaximizing):
             alpha = max(alpha, value)
             if alpha >= beta:  # cutoff
                 break
+            if time.time()-start_time > threshold+10:
+                return value
         return value
     else:  # minimizing player
         value = +infinity
