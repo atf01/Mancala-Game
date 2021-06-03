@@ -1,5 +1,6 @@
 from Board import Board
 from choice_player import THE_players
+import pickle
 
 
 class Game():
@@ -10,39 +11,93 @@ class Game():
         self.player2 = None
         self.Curr_Player = None
         self.board = Board()
+        self.saved_game=[]
 
     def Run(self):
-        Game_mode = int(input('''
-        1- Human Vs Human
-        2- Human Vs AI
-        3- AI Vs Human
-        4- AI VS AI
-        You chice ? :
+        start_or_load = int(input('''
+            New Game  ---> Press 1
+            Load Game ---> Press 2
+        
         '''))
 
-        self.player1, self.player2 = THE_players(Game_mode)
-        self.Curr_Player = self.player1
-        print(self.player1.id, self.player2.id, self.Curr_Player.id)
+        if (start_or_load==1):
+            Game_mode = int(input('''
+                    1- Human Vs Human
+                    2- Human Vs AI
+                    3- AI Vs Human
+                    4- AI VS AI
+                    Your choice ? :
+                    '''))
 
-        while not self.board.GameOver():
+            self.player1, self.player2 = THE_players(Game_mode)
+            self.Curr_Player = self.player1
+            print(self.player1.id, self.player2.id, self.Curr_Player.id)
 
-            print(f"player : {self.player_turn}")
+            while not self.board.GameOver():
+                # print(self.saved_game) ---> this is for testing
+                print(f"player : {self.player_turn}")
+                print(self.board)
+                current_state = (self.board, self.player_turn,Game_mode)
+                #print(current_state) ---> this is for testing
+                with open('saved_gamed', 'wb') as file:
+                    pickle.dump(current_state, file)
+                file.close()
+                # print(type(self.board))
+                nextMove = self.Curr_Player.choice(self.board)
+                print(nextMove)
+                turn_end = self.board.Move(nextMove, self.player_turn)
+                # change Btween players
+                if turn_end:
+                    self.player_turn ^= 1
+                    if self.player_turn == 0:
+                        self.Curr_Player = self.player1
+                    else:
+                        self.Curr_Player = self.player2
             print(self.board)
-            nextMove = self.Curr_Player.choice(self.board)
-            print(nextMove)
-            turn_end = self.board.Move(nextMove, self.player_turn)
-            # change Btween players
-            if turn_end:
-                self.player_turn ^= 1
-                if self.player_turn == 0:
-                    self.Curr_Player = self.player1
-                else:
-                    self.Curr_Player = self.player2
-        print(self.board)
-        print(self.board.who_win())
-        # Todo calc the sum to the nune zero side player
-        # rais the winner player
-        print('end')
+            print(self.board.who_win())
+            # Todo calc the sum to the nune zero side player
+            # rais the winner player
+            print('end')
+        elif(start_or_load==2):
+            with open('saved_gamed', 'rb') as file:
+                tuples = pickle.load(file)
+            file.close()
+           # print(tuples[1])
+            #print(tuples)
+            self.player1, self.player2 = THE_players(tuples[2])
+            if(tuples[1]==0):
+                self.Curr_Player = self.player1
+            else:
+                self.Curr_Player = self.player2
+            print(self.player1.id, self.player2.id, self.Curr_Player.id)
+            Game_mode=tuples[2]
+            self.player_turn = tuples[1]
+            self.board = tuples[0]
+            while not self.board.GameOver():
+                # print(self.saved_game) ---> this is for testing
+                print(f"player : {self.player_turn}")
+                print(self.board)
+                current_state = (self.board, self.player_turn,Game_mode)
+                #self.saved_game.append(current_state)
+                with open('saved_gamed', 'wb') as file:
+                    pickle.dump(current_state, file)
+                file.close()
+                # print(type(self.board))
+                nextMove = self.Curr_Player.choice(self.board)
+                print(nextMove)
+                turn_end = self.board.Move(nextMove, self.player_turn)
+                # change Btween players
+                if turn_end:
+                    self.player_turn ^= 1
+                    if self.player_turn == 0:
+                        self.Curr_Player = self.player1
+                    else:
+                        self.Curr_Player = self.player2
+            print(self.board)
+            print(self.board.who_win())
+            # Todo calc the sum to the nune zero side player
+            # rais the winner player
+            print('end')
 
 
 if __name__ == "__main__":

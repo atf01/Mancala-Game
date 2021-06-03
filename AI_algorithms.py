@@ -2,7 +2,7 @@ infinity = float('inf')
 
 
 def AlphaBetaAlg(node, depth=infinity, alpha=-infinity, beta=infinity, isMaximizing=True):
-    if depth == 0 or node.isterminal(isMaximizing):  # base condition
+    if depth == 0 or node.isterminal(isMaximizing):  # base condition to stop
         return node.value, node.pos
 
     best_pos = None
