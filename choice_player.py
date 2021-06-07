@@ -19,7 +19,7 @@ def THE_players(Game_mode,difficulty=3):
 
     elif Game_mode == 4:
         print('Ai VS Ai Mode')
-        Player_1, Player_2 = AI_player(0, difficulty), AI_player(1,difficulty+3)
+        Player_1, Player_2 = AI_player(0, difficulty), AI_player(1,difficulty)
     return Player_1, Player_2
 
 # test
