@@ -5,7 +5,8 @@ import pickle
 
 class Game():
 
-    def __init__(self):  # two players and board
+    def __init__(self):  # two players and board1
+
         self.player_turn = 0
         self.player1 = None
         self.player2 = None
@@ -23,7 +24,7 @@ class Game():
         while start_or_load not in [1,2]:
             start_or_load = int(input('''
             Please Enter a Valid choice!
-            
+
             New Game  ---> Press 1
             Load Game ---> Press 2
         '''))

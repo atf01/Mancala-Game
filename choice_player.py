@@ -1,10 +1,12 @@
-from Players import Human_player, AI_player
+
+from Players import Human_player, AI_player, player
 
 def get_difficulty(d):
     return d*2+1
 
 def THE_players(Game_mode,difficulty=3):
     difficulty = get_difficulty(difficulty)
+    player.id=0
     if Game_mode == 1:
         print('Human VS Human Mode')
         Player_1, Player_2 = Human_player(0), Human_player(1)
