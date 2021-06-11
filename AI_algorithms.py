@@ -2,6 +2,9 @@ import time
 
 infinity = float('inf')
 
+def return_value(ele):
+    return ele.value
+    
 def AlphaBetaAlg(start_time,node,depth=infinity, alpha=-infinity, beta=infinity, isMaximizing=True,threshold=30):
     if depth == 0 or node.isterminal(isMaximizing):  # base condition
         return node.value, node.pos
@@ -10,7 +13,7 @@ def AlphaBetaAlg(start_time,node,depth=infinity, alpha=-infinity, beta=infinity,
 
     if isMaximizing:  # maxmizer player
         value = -infinity
-        Choices = node.get_children()
+        Choices = sorted(node.get_children(), key=return_value, reverse=True)
         for i in Choices:
             other = AlphaBetaAlg(start_time,i, depth - 1, alpha, beta, isMaximizing=i.is_repeated)
             if value < other[0]:
@@ -27,7 +30,7 @@ def AlphaBetaAlg(start_time,node,depth=infinity, alpha=-infinity, beta=infinity,
 
     else:  # minimizer player
         value = infinity
-        Choices = node.get_opponent_children()
+        Choices = sorted(node.get_opponent_children(), key=return_value)
         for i in Choices:
             other = AlphaBetaAlg(start_time,i, depth - 1, alpha, beta, isMaximizing=not i.is_repeated)
             if value > other[0]:
