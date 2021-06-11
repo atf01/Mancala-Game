@@ -5,7 +5,8 @@ import pickle
 
 class Game():
 
-    def __init__(self):  # two players and board
+    def __init__(self):  # two players and board1
+
         self.player_turn = 0
         self.player1 = None
         self.player2 = None
@@ -19,6 +20,13 @@ class Game():
             Load Game ---> Press 2
         
         '''))
+        while start_or_load not in [1,2]:
+            start_or_load = int(input('''
+            Please Enter a Valid choice!
+
+            New Game  ---> Press 1
+            Load Game ---> Press 2
+        '''))
 
         if (start_or_load==1):
             Game_mode = int(input('''
@@ -28,16 +36,23 @@ class Game():
                     4- AI VS AI
                     Your choice ? :
                     '''))
-
-            self.player1, self.player2 = THE_players(Game_mode)
+            if Game_mode>1:
+                difficulty=int(input('''
+                 1-Easy Mode
+                 2-Moderate Mode
+                 3-Hard Mode
+                '''))
+            if Game_mode>1:
+                self.player1, self.player2 = THE_players(Game_mode,difficulty)
+            else:
+                self.player1, self.player2 = THE_players(Game_mode)
             self.Curr_Player = self.player1
             print(self.player1.id, self.player2.id, self.Curr_Player.id)
-
             while not self.board.GameOver():
                 # print(self.saved_game) ---> this is for testing
                 print(f"player : {self.player_turn}")
                 print(self.board)
-                current_state = (self.board, self.player_turn,Game_mode)
+                current_state = (self.board, self.player_turn,Game_mode,difficulty)
                 #print(current_state) ---> this is for testing
                 with open('saved_gamed', 'wb') as file:
                     pickle.dump(current_state, file)
@@ -64,20 +79,21 @@ class Game():
             file.close()
            # print(tuples[1])
             #print(tuples)
-            self.player1, self.player2 = THE_players(tuples[2])
+            self.board,self.player_turn,Game_mode,difficulty=tuples
+            if difficulty is not None:
+                self.player1, self.player2 = THE_players(Game_mode,difficulty)
+            else:
+                self.player1, self.player2 = THE_players(Game_mode)
             if(tuples[1]==0):
                 self.Curr_Player = self.player1
             else:
                 self.Curr_Player = self.player2
             print(self.player1.id, self.player2.id, self.Curr_Player.id)
-            Game_mode=tuples[2]
-            self.player_turn = tuples[1]
-            self.board = tuples[0]
             while not self.board.GameOver():
                 # print(self.saved_game) ---> this is for testing
                 print(f"player : {self.player_turn}")
                 print(self.board)
-                current_state = (self.board, self.player_turn,Game_mode)
+                current_state = (self.board, self.player_turn,Game_mode,difficulty)
                 #self.saved_game.append(current_state)
                 with open('saved_gamed', 'wb') as file:
                     pickle.dump(current_state, file)
@@ -101,5 +117,8 @@ class Game():
 
 
 if __name__ == "__main__":
-    game = Game()
-    game.Run()
+    y='y'
+    while y  in ['yes','ya','yeah','Yes','y','Y']:
+        game = Game()
+        game.Run()
+        y=input('do you want to play again?')

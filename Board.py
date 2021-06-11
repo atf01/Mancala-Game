@@ -26,6 +26,7 @@ class Board():
         #     pos = player_turn * 7 + int(input(
         #         f"please enter valid choice: from the list {list(map(lambda x: x - (player_turn * 7), self.Possible_moves(player_turn)))}"))
 
+
         if pos in self.Possible_moves(player_turn):
             hand = self.Board[pos]
             self.Board[pos] = 0

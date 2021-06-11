@@ -1,22 +1,27 @@
-from Players import Human_player, AI_player
 
+from Players import Human_player, AI_player, player
 
-def THE_players(Game_mode):
+def get_difficulty(d):
+    return d*2+1
+
+def THE_players(Game_mode,difficulty=3):
+    difficulty = get_difficulty(difficulty)
+    player.id=0
     if Game_mode == 1:
-        print('Human _ Human Mode')
+        print('Human VS Human Mode')
         Player_1, Player_2 = Human_player(0), Human_player(1)
 
     elif Game_mode == 2:
-        print('Human _ Ai Mode')
-        Player_1, Player_2 = Human_player(0), AI_player(1,2)
+        print('Human VS Ai Mode')
+        Player_1, Player_2 = Human_player(0), AI_player(1,difficulty)
 
     elif Game_mode == 3:
-        print('Ai _ Human Mode')
-        Player_1, Player_2 = AI_player(0,2), Human_player(1)
+        print('Ai VS Human Mode')
+        Player_1, Player_2 = AI_player(0,difficulty), Human_player(1)
 
     elif Game_mode == 4:
-        print('Ai _ Ai Mode')
-        Player_1, Player_2 = AI_player(0, 3), AI_player(1,4)
+        print('Ai VS Ai Mode')
+        Player_1, Player_2 = AI_player(0, difficulty), AI_player(1,difficulty)
     return Player_1, Player_2
 
 # test
