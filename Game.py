@@ -47,10 +47,9 @@ class Game():
             else:
                 self.player1, self.player2 = THE_players(Game_mode)
             self.Curr_Player = self.player1
-            print(self.player1.id, self.player2.id, self.Curr_Player.id)
             while not self.board.GameOver():
                 # print(self.saved_game) ---> this is for testing
-                print(f"player : {self.player_turn}")
+                print(f"player : {self.player_turn+1}")
                 print(self.board)
                 current_state = (self.board, self.player_turn,Game_mode,difficulty)
                 #print(current_state) ---> this is for testing
@@ -59,7 +58,6 @@ class Game():
                 file.close()
                 # print(type(self.board))
                 nextMove = self.Curr_Player.choice(self.board)
-                print(nextMove)
                 turn_end = self.board.Move(nextMove, self.player_turn)
                 # change Btween players
                 if turn_end:
@@ -69,7 +67,7 @@ class Game():
                     else:
                         self.Curr_Player = self.player2
             print(self.board)
-            print(self.board.who_win())
+            print(f'Player {self.board.who_win()+1} wins !!!!')
             # Todo calc the sum to the nune zero side player
             # rais the winner player
             print('end')
@@ -88,10 +86,9 @@ class Game():
                 self.Curr_Player = self.player1
             else:
                 self.Curr_Player = self.player2
-            print(self.player1.id, self.player2.id, self.Curr_Player.id)
             while not self.board.GameOver():
                 # print(self.saved_game) ---> this is for testing
-                print(f"player : {self.player_turn}")
+                print(f"player : {self.player_turn+1}")
                 print(self.board)
                 current_state = (self.board, self.player_turn,Game_mode,difficulty)
                 #self.saved_game.append(current_state)
@@ -100,7 +97,6 @@ class Game():
                 file.close()
                 # print(type(self.board))
                 nextMove = self.Curr_Player.choice(self.board)
-                print(nextMove)
                 turn_end = self.board.Move(nextMove, self.player_turn)
                 # change Btween players
                 if turn_end:
@@ -110,7 +106,7 @@ class Game():
                     else:
                         self.Curr_Player = self.player2
             print(self.board)
-            print(self.board.who_win())
+            print(f'Player {self.board.who_win()+1} wins !!!!')
             # Todo calc the sum to the nune zero side player
             # rais the winner player
             print('end')

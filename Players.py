@@ -32,11 +32,9 @@ class AI_player(player):
 
     def choice(self, board):
         node = Node(self.id, board)
-        print('difficulty level',self.diff)
         start_time = time.time()
         for i in range(1,self.diff):
           value, pos = AlphaBetaAlg(start_time, node, depth=i)
-        print('possible winning value', value)
         return pos
 
 
