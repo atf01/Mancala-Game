@@ -8,3 +8,7 @@ This is an implementation of MiniMax algorithm with alpha-beta prunning in Pytho
 - Ziad Tarek
 - Mina Wagdy
 - Ahmed Taha Fekry
+
+Binary executable is inside "dist" Folder.
+
+YOUTUBE LINK : https://www.youtube.com/watch?v=EU4LVfRKxXY
