@@ -29,6 +29,12 @@ class Game():
         '''))
 
         if (start_or_load==1):
+            stealing = int(input(
+                '''
+                1-with Stealing
+                2-without Stealing
+                '''
+            ))
             Game_mode = int(input('''
                     1- Human Vs Human
                     2- Human Vs AI
@@ -51,14 +57,14 @@ class Game():
                 # print(self.saved_game) ---> this is for testing
                 print(f"player : {self.player_turn+1}")
                 print(self.board)
-                current_state = (self.board, self.player_turn,Game_mode,difficulty)
+                current_state = (self.board, self.player_turn,Game_mode,difficulty, stealing)
                 #print(current_state) ---> this is for testing
                 with open('saved_gamed', 'wb') as file:
                     pickle.dump(current_state, file)
                 file.close()
                 # print(type(self.board))
                 nextMove = self.Curr_Player.choice(self.board)
-                turn_end = self.board.Move(nextMove, self.player_turn)
+                turn_end = self.board.Move(nextMove, self.player_turn, stealing=(stealing==1))
                 # change Btween players
                 if turn_end:
                     self.player_turn ^= 1
@@ -77,7 +83,7 @@ class Game():
             file.close()
            # print(tuples[1])
             #print(tuples)
-            self.board,self.player_turn,Game_mode,difficulty=tuples
+            self.board,self.player_turn,Game_mode,difficulty, stealing=tuples
             if difficulty is not None:
                 self.player1, self.player2 = THE_players(Game_mode,difficulty)
             else:
@@ -90,14 +96,14 @@ class Game():
                 # print(self.saved_game) ---> this is for testing
                 print(f"player : {self.player_turn+1}")
                 print(self.board)
-                current_state = (self.board, self.player_turn,Game_mode,difficulty)
+                current_state = (self.board, self.player_turn,Game_mode,difficulty, stealing)
                 #self.saved_game.append(current_state)
                 with open('saved_gamed', 'wb') as file:
                     pickle.dump(current_state, file)
                 file.close()
                 # print(type(self.board))
                 nextMove = self.Curr_Player.choice(self.board)
-                turn_end = self.board.Move(nextMove, self.player_turn)
+                turn_end = self.board.Move(nextMove, self.player_turn, stealing=(stealing==1))
                 # change Btween players
                 if turn_end:
                     self.player_turn ^= 1

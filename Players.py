@@ -23,7 +23,6 @@ class Human_player(player):
 
         return pos
 
-
 class AI_player(player):
     def __init__(self, id, diff):
         self.id = player.id
